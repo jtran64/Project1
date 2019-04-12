@@ -70,7 +70,7 @@ public class ReimbursementController {
 	public static String approveDenyReimbursement(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			long id = Long.parseLong(req.getParameter("reimbId"));
-			int status = Integer.parseInt(req.getParameter("status"));
+			int status = Integer.parseInt(req.getParameter("reimbStatus"));
 			User resolver = (User)req.getSession().getAttribute("User");
 			ReimbursementDaoImpl reimbursementDaoImpl = new ReimbursementDaoImpl();
 			

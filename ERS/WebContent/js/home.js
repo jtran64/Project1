@@ -163,15 +163,17 @@ function showHideAdmin(role) {
 }
 
 function approveRequest() {
-	approveDenyRequest("2");
+	document.getElementById("currentStatus").value = "2";
+	//approveDenyRequest("2");
 }
 
 function denyRequest() {
-	approveDenyRequest("3");
+	document.getElementById("currentStatus").value = "3";
+	//approveDenyRequest("3");
 }
 
 //Approves a request
-function approveDenyRequest(status) {
+/*function approveDenyRequest(status) {
 	let id = document.getElementById("reimbId").value;
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -182,7 +184,7 @@ function approveDenyRequest(status) {
 	xhttp.open("POST", "http://localhost:8080/ERS/html/approveDenyReq.do", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("reimbId=" + id + "&status=" + status);
-}
+}*/
 
 //Gets user information
 function getUser() {

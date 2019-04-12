@@ -137,58 +137,58 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<form id="myForm" method="post" action="">
+					<form id="myForm" method="post" action="./approveDenyReq.do">
 						<div class="form-group">
 							<label> 
 							<span>Reimbursement Id</span> 
-							<input type="text" class="form-control" id="reimbId" name="reimbId" disabled>
+							<input type="text" class="form-control" id="reimbId" name="reimbId" readonly="true">
 							</label> 
 							
 							<label> 
 							<span>Status</span> 
-							<input type="text" class="form-control" id="reimbStatus" disabled>
+							<input type="text" class="form-control" id="reimbStatus" readonly="true">
 							</label>
 						</div>
 						<div class="form-group">
 							<label> 
 							<span>Date Submitted</span> 
-							<input type="text" class="form-control" id="dateSubmitted" disabled>
+							<input type="text" class="form-control" id="dateSubmitted" readonly="true">
 							</label> 
 							<label> 
 							<span>Date Resolved</span> 
-							<input type="text" class="form-control" id="dateResolved" disabled>
+							<input type="text" class="form-control" id="dateResolved" readonly="true">
 							</label>
 						</div>
 						<div class="form-group">
 							<label for="amount"> 
 							<span>Author</span> 
-							<input type="text" class="form-control" id="reimbAuthor" disabled>
+							<input type="text" class="form-control" id="reimbAuthor" readonly="true">
 							</label> 
 							<label for="amount"> 
 							<span>Resolver</span> 
-							<input type="text" class="form-control" id="reimbResolver" disabled>
+							<input type="text" class="form-control" id="reimbResolver" readonly="true">
 							</label>
 						</div>
 						<div class="form-group">
 							<label for="amount"> 
 							<span>Amount</span> 
-							<input type="text" class="form-control" id="reimbAmount" disabled>
+							<input type="text" class="form-control" id="reimbAmount" readonly="true">
 							</label> 
 							<label for="amount"> 
 							<span>Type</span> 
-							<input type="text" class="form-control" id="reimbType" disabled>
+							<input type="text" class="form-control" id="reimbType" readonly="true">
 							</label>
 						</div>
 						<div class="form-group">
 							<label for="description">Description</label>
-							<textarea maxlength="250" id="reimbDescription" wrap="hard" style="width: 100%" disabled></textarea>
+							<textarea maxlength="250" id="reimbDescription" wrap="hard" style="width: 100%" readonly="true"></textarea>
 						</div>
-
-						<button id="approveBtn" type="submit" class="btn btn-primary"
-							onclick="approveRequest()" data-dismiss="modal">Approve</button>
+						<input id="currentStatus" name="reimbStatus" value="" style="display: none;">
+						<input id="approveBtn" type="submit" class="btn btn-primary"
+							onclick="approveRequest()" value="Approve">
 							
-						<button id="denyBtn" type="submit" class="btn btn-primary"
-							onclick="denyRequest()" data-dismiss="modal">Deny</button>
+						<input id="denyBtn" type="submit" class="btn btn-primary"
+							onclick="denyRequest()" value="Deny">
 					</form>
 				</div>
 			</div>

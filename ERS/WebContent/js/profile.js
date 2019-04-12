@@ -9,8 +9,6 @@ function getUser() {
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			let user = JSON.parse(xhttp.responseText);
-			console.log("test");
-			console.log(user);
 			loadFields(user);
 		}
 	}
