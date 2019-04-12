@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+	<div class="sidenav">
+		<div id="logo-box">
+			<img src="../resources/rev-logo.png" alt="Revature">
+		</div>
+		<div>
+			<h5 id="welcomeUser" class="my-5" style="text-align: center;"></h5>
+		</div>
+		<div class="top-nav sidenav-box">
+			<a href="http://localhost:8080/ERS/html/home.html">Home</a>
+		</div>
+		<div class="sidenav-box">
+			<a href="http://localhost:8080/ERS/html/profile.html">Profile</a>
+		</div>
+		<div class="sidenav-box">
+			<a href="./logout.do">Logout</a>
+		</div>
+	</div>
+
+	<div class="col-md-10 offset-md-2" style="padding-top: 50px">
+		<div>
+			<button type="button" class="btn btn-secondary" id="create_request"
+				data-toggle="modal" data-target="#createRequestModal"
+				style="margin-left: 10px;">Create Request</button>
+
+			<button type="button" class="btn btn-secondary" id="sortAmount"
+				onclick="sortTable()"
+				style="margin-left: 70px; width: 75px; text-align: left;">Sort</button>
+
+			<input id="authSearch" class="" type="text"
+				placeholder="Search Author" onkeyup="searchAuthor()"
+				style="margin-left: 125px;"> <input id="resolvSearch"
+				type="text" placeholder="Search Resolver" onkeyup="searchResolver()"
+				style="margin-left: 20px;"> <span style="margin-left: 20px;">
+				<button class="btn btn-secondary dropdown-toggle" type="button"
+					id="statusDropDown" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="width: 125px; text-align: left;">All</button>
+				<div id="statusItems" class="dropdown-menu a" aria-labelledby="statusDropDown">
+					<a class="dropdown-item" onclick="changeStatusFilter(this.innerHTML)">Pending</a> 
+					<a class="dropdown-item" onclick="changeStatusFilter(this.innerHTML)">Approved</a>
+					<a class="dropdown-item" onclick="changeStatusFilter(this.innerHTML)">Denied</a> 
+					<a class="dropdown-item" onclick="changeStatusFilter(this.innerHTML)">All</a>
+				</div>
+			</span> <span style="margin-left: 75px;">
+				<button class="btn btn-secondary dropdown-toggle" type="button"
+					id="typeDropDown" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="width: 125px; text-align: left;">All</button>
+				<div id="typeItems" class="dropdown-menu b" aria-labelledby="typeDropDown">
+					<a class="dropdown-item" onclick="changeTypeFilter(this.innerHTML)">Food</a>
+					<a class="dropdown-item" onclick="changeTypeFilter(this.innerHTML)">Lodging</a>
+					<a class="dropdown-item" onclick="changeTypeFilter(this.innerHTML)">Travel</a>
+					<a class="dropdown-item" onclick="changeTypeFilter(this.innerHTML)">Other</a>
+					<a class="dropdown-item" onclick="changeTypeFilter(this.innerHTML)">All</a>
+				</div>
+			</span>
+		</div>
+		
+		<table class="table table-hover" id="reimbTable"
+			style="table-layout: fixed; width: 100%;"">
+			<thead>
+				<tr>
+					<th scope="col">Reimbursement Id</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Author</th>
+					<th scope="col">Resolver</th>
+					<th scope="col">Status</th>
+					<th scope="col">Type</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="modal fade" id="createRequestModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Create Reimbursement Request</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form id="myForm" method="post" action="./createReimb.do">
+						<div class="form-group">
+							<label for="amount">Amount</label> 
+							<input type="number" class="form-control" id="amount" name="amount" onkeyup="verifyAmount()" required>
+						</div>
+						<div class="form-group">
+							<label for="type">Reimbursement Type</label>
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									id="dropdownMenuButton" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">Type</button>
+								<input type="hidden" id="type" name="type">
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" onclick=changeType(this.innerHTML)>Lodging</a>
+									<a class="dropdown-item" onclick=changeType(this.innerHTML)>Travel</a>
+									<a class="dropdown-item" onclick=changeType(this.innerHTML)>Food</a>
+									<a class="dropdown-item" onclick=changeType(this.innerHTML)>Other</a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="description">Description</label>
+							<textarea maxlength="250" id="description" name="description" wrap="hard" style="width: 100%"></textarea>
+						</div>
+
+						<input id="reimbSubmitBtn" type="submit" class="btn btn-primary" onmouseover="verifyAmount()" value="Submit">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="requestDetails" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Reimbursement Details</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form id="myForm" method="post" action="">
+						<div class="form-group">
+							<label> 
+							<span>Reimbursement Id</span> 
+							<input type="text" class="form-control" id="reimbId" name="reimbId" disabled>
+							</label> 
+							
+							<label> 
+							<span>Status</span> 
+							<input type="text" class="form-control" id="reimbStatus" disabled>
+							</label>
+						</div>
+						<div class="form-group">
+							<label> 
+							<span>Date Submitted</span> 
+							<input type="text" class="form-control" id="dateSubmitted" disabled>
+							</label> 
+							<label> 
+							<span>Date Resolved</span> 
+							<input type="text" class="form-control" id="dateResolved" disabled>
+							</label>
+						</div>
+						<div class="form-group">
+							<label for="amount"> 
+							<span>Author</span> 
+							<input type="text" class="form-control" id="reimbAuthor" disabled>
+							</label> 
+							<label for="amount"> 
+							<span>Resolver</span> 
+							<input type="text" class="form-control" id="reimbResolver" disabled>
+							</label>
+						</div>
+						<div class="form-group">
+							<label for="amount"> 
+							<span>Amount</span> 
+							<input type="text" class="form-control" id="reimbAmount" disabled>
+							</label> 
+							<label for="amount"> 
+							<span>Type</span> 
+							<input type="text" class="form-control" id="reimbType" disabled>
+							</label>
+						</div>
+						<div class="form-group">
+							<label for="description">Description</label>
+							<textarea maxlength="250" id="reimbDescription" wrap="hard" style="width: 100%" disabled></textarea>
+						</div>
+
+						<button id="approveBtn" type="submit" class="btn btn-primary"
+							onclick="approveRequest()" data-dismiss="modal">Approve</button>
+							
+						<button id="denyBtn" type="submit" class="btn btn-primary"
+							onclick="denyRequest()" data-dismiss="modal">Deny</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="../js/home.js"></script>
+</body>
+</html>
